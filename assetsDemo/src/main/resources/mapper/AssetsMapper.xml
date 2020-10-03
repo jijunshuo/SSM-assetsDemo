@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kgc.mapper.AssetsMapper" >
+  <resultMap id="BaseResultMap" type="com.kgc.pojo.Assets" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="assetId" property="assetid" jdbcType="CHAR" />
+    <result column="assetName" property="assetname" jdbcType="VARCHAR" />
+    <result column="assetType" property="assettype" jdbcType="VARCHAR" />
+    <result column="intoDate" property="intodate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, assetId, assetName, assetType, intoDate
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.kgc.pojo.AssetsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from assets
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from assets
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from assets
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.kgc.pojo.AssetsExample" >
+    delete from assets
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.kgc.pojo.Assets" >
+    insert into assets (id, assetId, assetName, 
+      assetType, intoDate)
+    values (#{id,jdbcType=BIGINT}, #{assetid,jdbcType=CHAR}, #{assetname,jdbcType=VARCHAR}, 
+      #{assettype,jdbcType=VARCHAR}, #{intodate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kgc.pojo.Assets" >
+    insert into assets
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="assetid != null" >
+        assetId,
+      </if>
+      <if test="assetname != null" >
+        assetName,
+      </if>
+      <if test="assettype != null" >
+        assetType,
+      </if>
+      <if test="intodate != null" >
+        intoDate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="assetid != null" >
+        #{assetid,jdbcType=CHAR},
+      </if>
+      <if test="assetname != null" >
+        #{assetname,jdbcType=VARCHAR},
+      </if>
+      <if test="assettype != null" >
+        #{assettype,jdbcType=VARCHAR},
+      </if>
+      <if test="intodate != null" >
+        #{intodate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.kgc.pojo.AssetsExample" resultType="java.lang.Integer" >
+    select count(*) from assets
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update assets
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.assetid != null" >
+        assetId = #{record.assetid,jdbcType=CHAR},
+      </if>
+      <if test="record.assetname != null" >
+        assetName = #{record.assetname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.assettype != null" >
+        assetType = #{record.assettype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.intodate != null" >
+        intoDate = #{record.intodate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update assets
+    set id = #{record.id,jdbcType=BIGINT},
+      assetId = #{record.assetid,jdbcType=CHAR},
+      assetName = #{record.assetname,jdbcType=VARCHAR},
+      assetType = #{record.assettype,jdbcType=VARCHAR},
+      intoDate = #{record.intodate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kgc.pojo.Assets" >
+    update assets
+    <set >
+      <if test="assetid != null" >
+        assetId = #{assetid,jdbcType=CHAR},
+      </if>
+      <if test="assetname != null" >
+        assetName = #{assetname,jdbcType=VARCHAR},
+      </if>
+      <if test="assettype != null" >
+        assetType = #{assettype,jdbcType=VARCHAR},
+      </if>
+      <if test="intodate != null" >
+        intoDate = #{intodate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kgc.pojo.Assets" >
+    update assets
+    set assetId = #{assetid,jdbcType=CHAR},
+      assetName = #{assetname,jdbcType=VARCHAR},
+      assetType = #{assettype,jdbcType=VARCHAR},
+      intoDate = #{intodate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
